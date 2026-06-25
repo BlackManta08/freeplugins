@@ -3,6 +3,7 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include "PitchDetector.h"
 #include "PitchShifter.h"
+#include <atomic>
 
 class FreeAutotuneProcessor : public juce::AudioProcessor
 {
@@ -36,6 +37,15 @@ public:
     juce::AudioParameterFloat* pitchCorrectionAmount;
     juce::AudioParameterChoice* scaleType;
     juce::AudioParameterBool* bypassAutotune;
+    juce::AudioParameterFloat* vibratoAmount;
+    juce::AudioParameterFloat* vibratoRate;
+    juce::AudioParameterFloat* formantShift;
+
+    // Piano roll data
+    std::atomic<float> detectedPitch { 0.0f };
+    std::atomic<float> targetPitch { 0.0f };
+    std::atomic<bool> manualPitchMode { false };
+    std::atomic<float> manualTargetPitch { 0.0f };
 
 private:
     std::unique_ptr<PitchDetector> pitchDetector;
@@ -43,6 +53,10 @@ private:
 
     double sampleRate = 44100.0;
     int samplesPerBlock = 512;
+
+    // Vibrato
+    float vibratoPhase = 0.0f;
+    float applyVibrato(float frequency, float rate, float amount);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FreeAutotuneProcessor)
 };
