@@ -23,13 +23,20 @@ juce_add_plugin(FreeAutotune
     COPY_PLUGIN_AFTER_BUILD TRUE
     VST3_CATEGORIES "Audio"
     AU_MAIN_TYPE "kAudioUnitType_Effect"
+    FORMATS VST3 AU
 )
 
 target_sources(FreeAutotune PRIVATE
     src/PluginProcessor.cpp
+    src/PluginProcessor.h
     src/PluginEditor.cpp
+    src/PluginEditor.h
     src/PitchDetector.cpp
+    src/PitchDetector.h
     src/PitchShifter.cpp
+    src/PitchShifter.h
+    src/PianoRollComponent.cpp
+    src/PianoRollComponent.h
 )
 
 target_include_directories(FreeAutotune PRIVATE
@@ -51,3 +58,8 @@ target_link_libraries(FreeAutotune PRIVATE
     juce::juce_gui_extra
     ${SOUNDTOUCH_LIBRARIES}
 )
+
+# Platform-specific SoundTouch linking
+if(APPLE)
+    target_link_libraries(FreeAutotune PRIVATE "-framework Accelerate")
+endif()
