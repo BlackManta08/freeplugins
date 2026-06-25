@@ -1,0 +1,1 @@
+#include \"PluginProcessor.h\"\n\n// Plugin entry point\njuce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()\n{\n    return new FreeAutotuneProcessor();\n}\n
