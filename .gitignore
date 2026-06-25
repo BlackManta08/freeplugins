@@ -1,0 +1,29 @@
+# Build directories
+build/
+cmake-build-*/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# CMake
+CMakeUserPresets.json
+CMakeCache.txt
+
+# Dependencies
+JUCE/
+
+# Plugin builds
+*.vst3
+*.component
+*.dll
+*.so
+*.dylib
+
+# OS
+.DS_Store
+Thumbs.db
